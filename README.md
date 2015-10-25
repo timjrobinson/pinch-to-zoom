@@ -20,8 +20,8 @@ function zoom(x, y, delta) {
 
 ## Event properties
 
-**clientX / clientY** - The x and y coordinates the user appears to be pinching towards.
-**delta** - The total movement the user has done with the pinch in pixels.
+- **clientX / clientY** - The x and y coordinates the user appears to be pinching towards.
+- **delta** - The total movement the user has performed with the pinch in pixels.
 
 ## License 
 
