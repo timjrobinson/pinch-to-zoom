@@ -6,6 +6,10 @@ addWheelListener(renderer.view, function (e) {
   zoom(e.clientX, e.clientY, e.deltaY < 0);
 });
 
+addDragNDrop();
+
+isPinching = false;
+
 var getGraphCoordinates = (function () {
   var ctx = {
     global: { x: 0, y: 0} // store it inside closure to avoid GC pressure
@@ -17,9 +21,41 @@ var getGraphCoordinates = (function () {
   }
 }());
 
-function zoom(x, y, isZoomIn) {
-  var direction = isZoomIn ? 1 : -1;
-  var factor = (1 + direction * 0.1);
+function addDragNDrop() {
+  stage.setInteractive(true);
+
+  var isDragging = false,
+      prevX, prevY;
+
+  stage.touchstart = function (moveData) {
+    var pos = moveData.global;
+    prevX = pos.x; prevY = pos.y;
+    isDragging = true;
+  };
+
+  stage.touchmove = function (moveData) {
+    if (!isDragging) {
+      return;
+    }
+    var pos = moveData.global;
+    var dx = pos.x - prevX;
+    var dy = pos.y - prevY;
+    
+    // if (isPinching) return;
+    if ((Math.abs(dx) + Math.abs(dy)) > 100) return;
+
+    bunnies.position.x += dx;
+    bunnies.position.y += dy;
+    prevX = pos.x; prevY = pos.y;
+  };
+
+  stage.touchend = function (moveDate) {
+    isDragging = false;
+  };
+}
+
+function zoom(x, y, delta) {
+  var factor = (1 + delta / 300);
   bunnies.scale.x *= factor;
   bunnies.scale.y *= factor;
 
@@ -87,7 +123,16 @@ function writeArgs(type) {
 // writeArgs("pinch")("test")
 
 // $$("#canvas").pinch(writeArgs("pinch"));
-// $$("#canvas").touch(writeArgs("pinch"));
+$$("#canvas").on("touchend", function (e) {
+  // var totalTouches = e.touch.touches.length;
+  lastDelta = 0
+  midPoint = null
+  
+  var mhtml = document.getElementById("argtextpinching");
+  mhtml.innerHTML = JSON.stringifyOnce(e);
+  // mhtml.innerHTML = JSON.stringifyOnce("total touches: " + totalTouches);
+  
+});
 // $$("#canvas").swipe(writeArgs("pinch"));
 //Detect if is pinching
 // $$("#canvas").pinching(writeArgs("pinching"));
@@ -97,10 +142,30 @@ function writeArgs(type) {
 
 $$("#canvas").pinching(function (e) {
   var argtext = document.getElementById("argtextpinch");
-  argtext.innerHTML = JSON.stringifyOnce(e.touch.delta);
+  argtext.innerHTML = JSON.stringifyOnce(e.touch);
   
-  if (e.touch.delta != 0)
-    zoom(1, 1, e.touch.delta < 0);
+  isPinching = true;
+  var touches = e.touch.touches;
+  var deltaChange = e.touch.delta - lastDelta;
+  lastDelta = e.touch.delta;
+  
+  // var argtext = document.getElementById("argtextpinching");
+  // argtext.innerHTML = JSON.stringifyOnce("delta change: " + deltaChange);
+  
+  if (midPoint == null) {
+    midPoint = {
+      x: (touches[0].x + touches[0].x) / 2, 
+      y: (touches[1].y + touches[1].y) / 2
+    };
+  }
+  
+  var argtext = document.getElementById("argtextpinching");
+  if (midPoint)
+    argtext.innerHTML = JSON.stringifyOnce("midpoint" + JSON.stringifyOnce(midPoint));
+  
+  if (e.touch.delta != 0) {
+    zoom(midPoint.x, midPoint.y, deltaChange);
+  }
 });
 
 // $$("#canvas").pinchOut(function (e) {
