@@ -1,10 +1,10 @@
-var renderer = PIXI.autoDetectRenderer(800, 600,{backgroundColor : 0x1099bb});
-document.body.appendChild(renderer.view);
+view = document.getElementById('canvas');
+var renderer = PIXI.autoDetectRenderer(800, 600, view);
 
 // create the root of the scene graph
-var stage = new PIXI.Container();
+var stage = new PIXI.Stage();
 
-var container = new PIXI.Container();
+var container = new PIXI.Stage();
 
 stage.addChild(container);
 
