@@ -14,9 +14,10 @@ addPinchListener(domElement, function (event) {
 
 function zoom(x, y, delta) {
 
-
 }
 ```
+
+See the example for how to use this with Pixi.js
 
 ## Event properties
 
