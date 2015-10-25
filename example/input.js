@@ -2,6 +2,10 @@
     zoom(e.clientX, e.clientY, e.deltaY < 0);
   });
   
+  addWheelListener(renderer.view, function (e) {
+    zoom(e.clientX, e.clientY, e.deltaY < 0);
+  });
+  
   var getGraphCoordinates = (function () {
     var ctx = {
       global: { x: 0, y: 0} // store it inside closure to avoid GC pressure
