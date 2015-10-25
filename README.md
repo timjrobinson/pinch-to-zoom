@@ -4,7 +4,7 @@ A Javascript library that makes it easy to detect pinch and spread motions. This
 
 This is inspired by https://github.com/anvaka/wheel which makes it super easy to detect wheel scrolling, I wanted something similar for pinching / spreading. 
 
-This library uses [quo.js](https://github.com/soyjavi/QuoJS) for the cross platform touch handling.
+This library uses [QuoJS](https://github.com/soyjavi/QuoJS) for the cross platform touch handling. If you already have QuoJS on your site you can remove the lines including it at the top of pinch-to-zoom.js.
 
 ## Usage
 
