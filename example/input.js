@@ -1,9 +1,9 @@
 addPinchListener(renderer.view, function (e) {
-  zoom(e.clientX, e.clientY, e.deltaY < 0);
+  zoom(e.clientX, e.clientY, e.delta);
 });
 
 addWheelListener(renderer.view, function (e) {
-  zoom(e.clientX, e.clientY, e.deltaY < 0);
+  zoom(e.clientX, e.clientY, e.deltaY);
 });
 
 addDragNDrop();
@@ -55,7 +55,7 @@ function addDragNDrop() {
 }
 
 function zoom(x, y, delta) {
-  var factor = (1 + delta / 300);
+  var factor = (1 + (0-delta) / 300);
   bunnies.scale.x *= factor;
   bunnies.scale.y *= factor;
 
@@ -120,53 +120,11 @@ function writeArgs(type) {
     
 }
 
+
 // writeArgs("pinch")("test")
 
 // $$("#canvas").pinch(writeArgs("pinch"));
-$$("#canvas").on("touchend", function (e) {
-  // var totalTouches = e.touch.touches.length;
-  lastDelta = 0
-  midPoint = null
-  
-  var mhtml = document.getElementById("argtextpinching");
-  mhtml.innerHTML = JSON.stringifyOnce(e);
-  // mhtml.innerHTML = JSON.stringifyOnce("total touches: " + totalTouches);
-  
-});
-// $$("#canvas").swipe(writeArgs("pinch"));
-//Detect if is pinching
-// $$("#canvas").pinching(writeArgs("pinching"));
-//Pinch zoom
-// $$("#canvas").pinchIn(writeArgs("pinchIn"));
-// $$("#canvas").pinchOut(writeArgs("pinchOut"));
 
-$$("#canvas").pinching(function (e) {
-  var argtext = document.getElementById("argtextpinch");
-  argtext.innerHTML = JSON.stringifyOnce(e.touch);
-  
-  isPinching = true;
-  var touches = e.touch.touches;
-  var deltaChange = e.touch.delta - lastDelta;
-  lastDelta = e.touch.delta;
-  
-  // var argtext = document.getElementById("argtextpinching");
-  // argtext.innerHTML = JSON.stringifyOnce("delta change: " + deltaChange);
-  
-  if (midPoint == null) {
-    midPoint = {
-      x: (touches[0].x + touches[0].x) / 2, 
-      y: (touches[1].y + touches[1].y) / 2
-    };
-  }
-  
-  var argtext = document.getElementById("argtextpinching");
-  if (midPoint)
-    argtext.innerHTML = JSON.stringifyOnce("midpoint" + JSON.stringifyOnce(midPoint));
-  
-  if (e.touch.delta != 0) {
-    zoom(midPoint.x, midPoint.y, deltaChange);
-  }
-});
 
 // $$("#canvas").pinchOut(function (e) {
   // zoom(1, 1, true);

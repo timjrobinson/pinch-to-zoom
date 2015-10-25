@@ -9,11 +9,11 @@ This is inspired by https://github.com/anvaka/wheel which makes it super easy to
 ```
 addPinchListener(domElement, function (event) {
     // All event properties are described below
-    zoom(event.clientX, event.clientY, event.deltaY);
+    zoom(event.clientX, event.clientY, event.delta);
 });
 
 function zoom(x, y, delta) {
-    var isZoomIn = delta < 0;
+
 
 }
 ```
@@ -21,7 +21,7 @@ function zoom(x, y, delta) {
 ## Event properties
 
 **clientX / clientY** - The x and y coordinates the user appears to be pinching towards.
-**deltaX / deltaY** - The total movement the user has done in each direction. When pinching these numbers will be positive. When spreading these numbers will be negative.
+**delta** - The total movement the user has done with the pinch in pixels.
 
 ## License 
 
