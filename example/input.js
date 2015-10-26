@@ -1,5 +1,5 @@
 addPinchListener(renderer.view, function (e) {
-  zoom(e.clientX, e.clientY, e.delta);
+  zoom(e.x, e.y, e.delta);
 });
 
 

@@ -32,12 +32,6 @@ function addPinchListener(element, callback) {
             delta: 0 - deltaChange, // Reversed for consistency with mouse wheel listener
         } 
         
-        /* For consistency with mouse wheel listener */
-        event.clientX = event.x;
-        event.clientY = event.y; 
-        event.deltaX = event.delta;
-        event.deltaY = event.delta;
-        
         return callback(event);
       }
     });

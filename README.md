@@ -11,7 +11,7 @@ This library uses [QuoJS](https://github.com/soyjavi/QuoJS) for the cross platfo
 ```
 addPinchListener(domElement, function (event) {
     // All event properties are described below
-    zoom(event.clientX, event.clientY, event.delta);
+    zoom(event.x, event.y, event.delta);
 });
 
 function zoom(x, y, delta) {
@@ -23,7 +23,7 @@ See the example for how to use this with Pixi.js
 
 ## Event properties
 
-- **clientX / clientY** - The x and y coordinates the user appears to be pinching towards.
+- **x / y** - The x and y coordinates the user appears to be pinching towards. This is in pixels from the top left of the screen.
 - **delta** - The total movement the user has performed with the pinch in pixels.
 
 ## License 
